@@ -1,0 +1,37 @@
+# DO NOT forget to change todo_keyphrase_* in this file.
+# That is for security reasons, despite services should never be exposed on local network. 
+
+version: "2"
+
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: todo_keyphrase_1
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: todo_keyphrase_1
+    ports:
+      - 127.0.0.1:8081:80
+
+  backend:
+    build: ./
+    links:
+      - mariadb
+    environment:
+      MYSQL_HOST: mariadb
+      MYSQL_DATABASE: cleaningshop
+      MYSQL_USERNAME: root
+      MYSQL_PASSWORD: todo_keyphrase_1
+      LISTEN_PORT: 8080
+      COOKIE_ENCRYPTION_KEY: todo_keyphrase_2
+      COOKIE_SECURE: 'false'
+      COOKIE_MAX_AGE_IN_DAYS: 90
+    ports:
+      - 127.0.0.1:8080:8080
