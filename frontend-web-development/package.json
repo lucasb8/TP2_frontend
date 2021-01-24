@@ -7,7 +7,8 @@
     "test": "NODE_ENV=test nyc --reporter=html mocha --recursive build/server/specs --timeout=0 --exit",
     "test:one": "NODE_ENV=test mocha $* --timeout=0 --exit",
     "db:prepare:test": "NODE_ENV=test node -e \"require('./build/server/mysql-store').default.rebuildDatabase('test').then(() => process.exit()).catch(err => { console.error(err); process.exit(1) })\"",
-    "db:prepare:prod": "NODE_ENV=test node -e \"require('./build/server/mysql-store').default.rebuildDatabase('prod').then(() => process.exit()).catch(err => { console.error(err); process.exit(1) })\""
+    "db:prepare:prod": "NODE_ENV=test node -e \"require('./build/server/mysql-store').default.rebuildDatabase('prod').then(() => process.exit()).catch(err => { console.error(err); process.exit(1) })\"",
+    "db:seeds": "node build/server/seeds"
   },
   "author": "Thomas VEILLARD",
   "license": "ISC",

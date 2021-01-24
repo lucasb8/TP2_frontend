@@ -10,7 +10,7 @@ class UserFactory extends FixtureFactory<User, UserRelation> {
   get firstname () { return faker.name.firstName() }
   get lastname () { return faker.name.lastName() }
   get email () { return faker.internet.email().toLowerCase() }
-  get passwordHash () { return bcrypt.hashSync('changeme', 12) }
+  get passwordHash () { return bcrypt.hashSync('seedpass', 12) }
 
   role = 'customer'
 }
