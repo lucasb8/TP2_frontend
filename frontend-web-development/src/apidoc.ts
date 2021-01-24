@@ -12,7 +12,8 @@ const apiDocConfig = {
   version: packageJson.version,
   description: packageJson.description,
   title: "API documentation for service-shop backend",
-  url : "http://localhost:8080"
+  url : "http://localhost:8080",
+  template: { forceLanguage: 'en' }
 }
 
 try {

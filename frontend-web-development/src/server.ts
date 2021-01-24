@@ -27,7 +27,8 @@ export default () => {
     ))
   }
 
-  router.use(bodyParser.json({ limit: '50mb' }))
+  router.use(bodyParser.json({ limit: '5mb' }))
+  router.use(bodyParser.urlencoded({ extended: true }))
   router.use(cookieParser)
   router.use(loadSession)
   router.use(overrideResponseJsonSerializer)
