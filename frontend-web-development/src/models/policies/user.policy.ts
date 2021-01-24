@@ -16,7 +16,8 @@ export default class userPolicy extends Policy {
   }
 
   getScope (user: User, scope = User.q) {
-    return scope.none
+    if (user.role === 'operator') return scope
+    return scope.whereId(user.id)
   }
 
   serialize (user: User, object: User) {
