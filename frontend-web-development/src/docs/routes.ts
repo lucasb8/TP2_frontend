@@ -1,4 +1,5 @@
 import PrintableError from "../printable-error"
+import * as get from 'lodash.get'
 
 interface Route {
   funcRoute: Function
@@ -51,9 +52,15 @@ export function sanetizeBody (funcRoute: Function, body: any, prefix = '') {
     const param = route.params.find(_ => _.key === absoluteKey)
 
     if (param?.type === 'object') safeBody[key] = sanetizeBody(funcRoute, body[key], absoluteKey)
-    else if (param?.type === typeof body[key]) safeBody[key] = body[key]
-    else if (param) throw new PrintableError([`A ${param.type} is expected for ${absoluteKey}, but ${typeof body[key]} was supplied`])
-    else throw new PrintableError([`Unautorized key found : ${absoluteKey}`])
+    else if (param?.type === typeof body[key] && body[key] !== '') safeBody[key] = body[key]
+    else if (param) throw new PrintableError([`A ${param.type} is expected for ${absoluteKey}, but ${typeof body[key]} was supplied.`])
+    else throw new PrintableError([`Unknown key found: ${absoluteKey}.`])
+  }
+
+  if (prefix === '') {
+    for (const param of route.params) {
+      if (typeof get(body, param.key) === 'undefined') throw new PrintableError([`Missing parameter: ${param.key}.`])
+    }
   }
   
   return safeBody

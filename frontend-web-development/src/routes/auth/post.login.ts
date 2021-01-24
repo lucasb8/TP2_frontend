@@ -17,7 +17,7 @@ export default async function login (req: Request, res: Response) {
   const safeBody: Auth$LoginParams = sanetizeBody(login, req.body)
   const user = await User.q.findByEmail(safeBody.email)
   if (!user) throw new PrintableError(['No account found for this email.'])
-
+  
   const validPassword = await bcrypt.compare(safeBody.password, user.passwordHash)
   if (!validPassword) throw new PrintableError(['Password is invalid.'])
 

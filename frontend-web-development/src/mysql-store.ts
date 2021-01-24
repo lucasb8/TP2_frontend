@@ -5,7 +5,7 @@ import Utils from './utils'
 export default class MySQLStore {
   public static connection: any
 
-  static async init (env: 'prod' | 'test' = 'prod') {
+  static async init (env: 'prod' | 'test' = 'prod', runTrigger = env === 'prod') {
     this.connection = await mysql.createPool({
       ...config.mysql,
       database: config.mysql.database + (env === 'test' ? '_test' : ''),
@@ -15,7 +15,7 @@ export default class MySQLStore {
       multipleStatements: true
     })
 
-    if (env === 'prod') await this.prepareTriggers()
+    if (runTrigger) await this.prepareTriggers()
   }
 
   static async close () {
@@ -43,10 +43,11 @@ export default class MySQLStore {
     Utils.debug(module, 'Triggers updated successfully')
   }
 
-  static async rebuildTestDatabase () {
-    await this.init('test')
-    await this.connection.query(`DROP DATABASE ${config.mysql.database}_test; CREATE DATABASE ${config.mysql.database}_test CHARACTER SET = 'utf8mb4' COLLATE = 'utf8mb4_bin';`)
-    await this.init('test')
+  static async rebuildDatabase (env: 'prod' | 'test' = 'test') {
+    const database = config.mysql.database + (env === 'test' ? '_test' : '')
+    await this.init(env, false)
+    await this.connection.query(`DROP DATABASE ${database}; CREATE DATABASE ${database} CHARACTER SET = 'utf8mb4' COLLATE = 'utf8mb4_bin';`)
+    await this.init(env, false)
     await this.buildTables()
     await this.prepareTriggers()
   }

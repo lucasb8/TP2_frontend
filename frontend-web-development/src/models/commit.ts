@@ -1,5 +1,6 @@
 import MySQLStore from '../mysql-store'
 import { IGetAll } from 'node-asuran-db/lib/model'
+import User from './user'
 
 export default class Commit {
   static async getAll ({ where }: IGetAll = {}) {
@@ -9,17 +10,13 @@ export default class Commit {
     return rows.map(_ => new Commit(_.id, _.author, _.message, _.openedAt, _.closedAt))
   }
 
-  static async getOrCreateDraftForAuthor (author: string) {
-    const where = { where: { sql: 'author = ? AND closedAt IS NULL', bindings: [author] } }
+  static async upsertCommit (user: User) {
+    const where = { where: { sql: 'author = ? AND closedAt IS NULL', bindings: [user?.email || 'internal'] } }
     const existing = (await this.getAll(where))[0]
     if (existing) return existing
 
-    await this.create({ author, message: null })
+    await this.create({ author: user?.email || 'internal', message: null })
     return (await this.getAll(where))[0]
-  }
-
-  static async getOrCreateDraftForAsuran () {
-    return this.getOrCreateDraftForAuthor('Système Asuran')
   }
 
   static async create (body: { author: string, message: string }) {

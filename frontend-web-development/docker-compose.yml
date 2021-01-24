@@ -7,7 +7,9 @@ services:
   mariadb:
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: todo_keyphrase_1
+      MYSQL_ROOT_PASSWORD: todo_keyphrase_1 # at least 20 chars
+    ports:
+      - 127.0.0.1:3306:3306
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -21,17 +23,18 @@ services:
       - 127.0.0.1:8081:80
 
   backend:
-    build: ./
+    build: .
     links:
       - mariadb
     environment:
       MYSQL_HOST: mariadb
       MYSQL_DATABASE: cleaningshop
       MYSQL_USERNAME: root
-      MYSQL_PASSWORD: todo_keyphrase_1
+      MYSQL_PWD: todo_keyphrase_1
       LISTEN_PORT: 8080
-      COOKIE_ENCRYPTION_KEY: todo_keyphrase_2
+      COOKIE_ENCRYPTION_KEY: todo_keyphrase_2 # at least 64 chars
       COOKIE_SECURE: 'false'
       COOKIE_MAX_AGE_IN_DAYS: 90
+      DEBUG: 'backend:*'
     ports:
       - 127.0.0.1:8080:8080
