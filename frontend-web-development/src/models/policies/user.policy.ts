@@ -20,6 +20,6 @@ export default class userPolicy extends Policy {
   }
 
   serialize (user: User, object: User) {
-   return object
+   return object.except(['passwordHash'])
   }
 }

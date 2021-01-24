@@ -2,7 +2,6 @@ import * as _chai from 'chai'
 import * as chaiHttp from 'chai-http'
 import * as express from 'express'
 import server from '../server'
-import { userFactory } from './factories/user.factory'
 
 _chai.use(chaiHttp)
 _chai.should()
@@ -20,8 +19,8 @@ export function getApp () {
 export async function setSessionInTestEnv (req: express.Request, res: express.Response, next: express.NextFunction) {
   if (process.env.NODE_ENV !== 'test') throw new Error('Never call that in production! Authentification bypass.')
 
-  if (req.headers.testauthbypassrole === 'customer') {
-    req.session = { userId: await userFactory.create(), save: () => null as any, destroy: () => null as any } as any
+  if (req.headers.testauthid) {
+    req.session = { userId: parseInt(req.headers.testauthid as string, 10), save: () => null as any, destroy: () => null as any } as any
   }
 
   next()

@@ -7,6 +7,7 @@ import * as morgan from 'morgan'
 import MySQLStore from './mysql-store'
 import config from './config'
 import authRoutes from './routes/auth/routes'
+import apiRoutes from './routes/api/routes'
 import PrintableError from './printable-error'
 
 export default () => {
@@ -35,6 +36,7 @@ export default () => {
 
   router.use('/docs', express.static('build/docs'))
   router.use('/auth', authRoutes)
+  router.use('/api', apiRoutes)
 
   router.use(logFailedRequest)
 

@@ -7,7 +7,7 @@ export function postLoginSpec () {
       const customer = await userFactory.createAndGet({ role: 'customer' })
       const res = await chai.request(getApp())
         .post('/auth/login')
-        .send({ email: customer.email, password: 'changeme' })
+        .send({ email: customer.email, password: 'seedpass' })
 
       expect(res).to.have.property('status', 200)
       expect(res.body).to.be.a('object')
@@ -18,7 +18,7 @@ export function postLoginSpec () {
       const customer = await userFactory.createAndGet({ role: 'customer' })
       const res = await chai.request(getApp())
         .post('/auth/login')
-        .send({ email: customer.email + 'suffix', password: 'changeme' })
+        .send({ email: customer.email + 'suffix', password: 'seedpass' })
 
       expect(res).to.have.property('status', 400)
       expect(res.body).to.be.a('object')
