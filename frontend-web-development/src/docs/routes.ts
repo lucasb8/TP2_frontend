@@ -51,10 +51,16 @@ export function sanetizeBody (funcRoute: Function, body: any, prefix = '') {
     const absoluteKey = prefix ? prefix + '.' + key : key
     const param = route.params.find(_ => _.key === absoluteKey)
 
-    if (param?.type === 'object') safeBody[key] = sanetizeBody(funcRoute, body[key], absoluteKey)
-    else if (param?.type === typeof body[key] && body[key] !== '') safeBody[key] = body[key]
-    else if (param) throw new PrintableError([`A ${param.type} is expected for ${absoluteKey}, but ${typeof body[key]} was supplied.`])
-    else throw new PrintableError([`Unknown key found: ${absoluteKey}.`])
+    if (param?.type === 'object') {
+      safeBody[key] = sanetizeBody(funcRoute, body[key], absoluteKey)
+    } else if (param?.type === typeof body[key]) {
+      if (param.required && body[key] !== 0 && !body[key]) throw new PrintableError([`Missing value for parameter: ${absoluteKey}.`])
+      safeBody[key] = body[key]
+    } else if (param) {
+      throw new PrintableError([`A ${param.type} is expected for ${absoluteKey}, but ${typeof body[key]} was supplied.`])
+    } else {
+      throw new PrintableError([`Unknown key found: ${absoluteKey}.`])
+    }
   }
 
   if (prefix === '') {
