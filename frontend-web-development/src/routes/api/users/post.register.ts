@@ -15,7 +15,7 @@ export interface Users$RegisterParams {
 }
 
 
-route(register, 'POST', '/api/users/register', 'Users', 'Self register')
+route(register, 'POST', '/api/users/register', 'Users', 'Register', 'Designed for self registration of customers and employees.')
 mandatory(register, 'email', 'string', 'Valid email address')
 mandatory(register, 'password', 'string', 'Password of the new user')
 mandatory(register, 'firstname', 'string', 'Firstname of the new user')

@@ -18,8 +18,7 @@ export function getApiDoc () {
 
   for (const route of routes) {
     comments.push('/**')
-    comments.push(`@api {${route.method.toLowerCase()}} ${route.path} ${route.description}`)
-    comments.push(`@apiName ${route.apiName}`)
+    comments.push(`@api {${route.method.toLowerCase()}} ${route.path} ${route.apiName}`)
     comments.push(`@apiGroup ${route.apiGroup}`)
     comments.push('')
     
@@ -28,7 +27,8 @@ export function getApiDoc () {
       comments.push(`@apiParam {${param.type[0].toUpperCase()}${param.type.substring(1)}} ${formattedkey} ${param.description}`)
     }
 
-    comments.push('*/')
+    if (route.description) comments.push(`@apiDescription ${route.description}`)
+    comments.push('*/\n\n')
   }
 
   return comments
