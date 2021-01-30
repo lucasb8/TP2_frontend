@@ -38,3 +38,5 @@ services:
       DEBUG: 'backend:*'
     ports:
       - 127.0.0.1:8080:8080
+    volumes:
+      - ../../frontend/dist/frontend:/app/build/frontend

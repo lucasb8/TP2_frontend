@@ -37,6 +37,13 @@ export default () => {
   router.use('/docs', express.static('build/docs'))
   router.use('/auth', authRoutes)
   router.use('/api', apiRoutes)
+  router.use(express.static('build/frontend'))
+
+  // serve static files (static files contains .)
+  router.get('*.*', express.static('build/frontend', {maxAge: '1y'}));
+
+  // serve angular bundle when loading an angular route (routes unknown by server)
+  router.get('*', (req, res) => res.status(200).sendFile('/', {root: 'build/frontend'}))
 
   router.use(logFailedRequest)
 

@@ -20,7 +20,6 @@ export function getApiDoc () {
     comments.push('/**')
     comments.push(`@api {${route.method.toLowerCase()}} ${route.path} ${route.apiName}`)
     comments.push(`@apiGroup ${route.apiGroup}`)
-    comments.push('')
     
     for (const param of route.params) {
       const formattedkey = param.required ? param.key : `[${param.key}]`
@@ -28,7 +27,7 @@ export function getApiDoc () {
     }
 
     if (route.description) comments.push(`@apiDescription ${route.description}`)
-    comments.push('*/\n\n')
+    comments.push('*/\n')
   }
 
   return comments
