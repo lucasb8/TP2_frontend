@@ -3,9 +3,9 @@ import { chai, getApp, expect } from '../../../specs-utils'
 import { userFactory } from '../../../factories/user.factory'
 import * as faker from 'faker'
 
-export function postApiUserRegister () {
+export function postApiUsersRegister () {
   describe('#POST /api/users/register', () => {
-    it('register as customer', async () => {
+    it('registers as customer', async () => {
       const body: Users$RegisterParams = {
         email: faker.internet.email().toLowerCase(),
         firstname: faker.name.firstName(),

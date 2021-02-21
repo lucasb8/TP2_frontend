@@ -3,7 +3,7 @@ import { userFactory } from "../../../factories/user.factory"
 
 export function getApiUsersIndex () {
   describe('#GET /api/users', () => {
-    it('list all users as operator (without password hashes)', async () => {
+    it('lists all users as operator (without password hashes)', async () => {
       await userFactory.create({ role: 'customer' })
       await userFactory.create({ role: 'operator' })
       const operatorId = await userFactory.create({ role: 'operator' })
@@ -15,7 +15,7 @@ export function getApiUsersIndex () {
       for (const user of res.body) expect(user).to.not.have.property('passwordHash')
     })
 
-    it('list only itself as customer (without password hashes)', async () => {
+    it('lists only itself as customer (without password hashes)', async () => {
       const customerId = await userFactory.create({ role: 'customer' })
       await userFactory.create({ role: 'operator' })
       await userFactory.create({ role: 'operator' })

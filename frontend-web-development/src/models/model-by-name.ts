@@ -1,4 +1,6 @@
 import './user'
+import './booking'
+import './delivery'
 import { FieldForeignKey, registredModels } from 'node-asuran-db/lib/model'
 
 export function getModels () {

@@ -3,7 +3,8 @@ import { postLoginSpec } from './auth/post.login.spec'
 import { deleteLogoutSpec } from './auth/delete.logout.spec'
 import { getApiUsersMe } from './api/users/get.me.spec'
 import { getApiUsersIndex } from './api/users/get.index.spec'
-import { postApiUserRegister } from './api/users/post.register.spec'
+import { postApiUsersRegister } from './api/users/post.register.spec'
+import { postApiBookingsProposals } from './api/bookings/post.proposals.spec'
 
 describe('APIs', () => {
   beforeEach(() => MySQLStore.reset())
@@ -13,5 +14,6 @@ describe('APIs', () => {
   deleteLogoutSpec()
   getApiUsersMe()
   getApiUsersIndex()
-  postApiUserRegister()
+  postApiUsersRegister()
+  postApiBookingsProposals()
 })

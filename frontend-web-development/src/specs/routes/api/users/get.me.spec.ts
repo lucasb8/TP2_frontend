@@ -3,7 +3,7 @@ import { userFactory } from "../../../factories/user.factory"
 
 export function getApiUsersMe () {
   describe('#GET /api/users/me', () => {
-    it('get non sensitive informations about currently logged user', async () => {
+    it('gets non sensitive informations about currently logged user', async () => {
       const customer = await userFactory.createAndGet({ role: 'customer' })
       const res = await chai.request(getApp()).get('/api/users/me').set('testauthid', customer.id.toString())
 

@@ -8,7 +8,7 @@ interface Route {
   description: string
   apiGroup: string
   apiName: string
-  params: { key: string, type: 'string' | 'object', required: boolean, description: string }[]
+  params: { key: string, type: 'string' | 'number' | 'object', required: boolean, description: string }[]
 }
 
 export const routes: Route[] = []
@@ -40,6 +40,11 @@ export function route (funcRoute: Function, method: Route['method'], path: strin
 export function mandatory (funcRoute: Function, key: string, type: Route['params'][0]['type'], description = '') {
   const route = routes.find(_ => _.funcRoute === funcRoute)
   route.params.push({ key, type, required: true, description })
+}
+
+export function optional (funcRoute: Function, key: string, type: Route['params'][0]['type'], description = '') {
+  const route = routes.find(_ => _.funcRoute === funcRoute)
+  route.params.push({ key, type, required: false, description })
 }
 
 export function sanetizeBody (funcRoute: Function, body: any, prefix = '') {

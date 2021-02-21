@@ -1,5 +1,7 @@
 import Commit from '../../models/commit'
-import { BodyPartial } from 'node-asuran-db/lib/model'
+import { BodyCreate, BodyPartial } from 'node-asuran-db/lib/model'
+
+export type FactoryInterface<T> = { [Property in keyof BodyCreate<T>]: void | BodyCreate<T>[Property] | Promise<BodyCreate<T>[Property]> }
 
 export default class FixtureFactory<T, TActiveRelation> {
   constructor (protected model: any) {}
