@@ -37,14 +37,10 @@ export function route (funcRoute: Function, method: Route['method'], path: strin
   routes.push({ funcRoute, method, path, description, apiGroup, apiName, params: [] })
 }
 
-export function mandatory (funcRoute: Function, key: string, type: Route['params'][0]['type'], description = '') {
+export function params (funcRoute: Function, { key, type, required, desc }: { key: string, type: Route['params'][0]['type'], required: boolean, desc?: string }) {
   const route = routes.find(_ => _.funcRoute === funcRoute)
-  route.params.push({ key, type, required: true, description })
-}
-
-export function optional (funcRoute: Function, key: string, type: Route['params'][0]['type'], description = '') {
-  const route = routes.find(_ => _.funcRoute === funcRoute)
-  route.params.push({ key, type, required: false, description })
+  route.params.push({ key, type, required, description: desc || '' })
+  route.params.sort((a, b) => a.key.localeCompare(b.key))
 }
 
 export function sanetizeBody (funcRoute: Function, body: any, prefix = '') {
@@ -68,8 +64,13 @@ export function sanetizeBody (funcRoute: Function, body: any, prefix = '') {
   }
 
   if (prefix === '') {
+    const excludedPaths: string[] = []
+
     for (const param of route.params) {
-      if (typeof get(body, param.key) === 'undefined') throw new PrintableError([`Missing parameter: ${param.key}.`])
+      if (typeof get(body, param.key) === 'undefined' && !excludedPaths.find(_ => param.key.startsWith(_))) {
+        if (param.required) throw new PrintableError([`Missing parameter: ${param.key}.`])
+        else excludedPaths.push(param.key)
+      }
     }
   }
   

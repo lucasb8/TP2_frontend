@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { mandatory, route, sanetizeBody } from '../../docs/routes'
+import { params, route, sanetizeBody } from '../../docs/routes'
 import User from '../../models/user'
 import * as util from 'util'
 import * as bcrypt from 'bcrypt'
@@ -11,8 +11,8 @@ export interface Auth$LoginParams {
 }
 
 route(login, 'POST', '/auth/login', 'Authentification', 'Login')
-mandatory(login, 'email', 'string', 'Email of a valid user account')
-mandatory(login, 'password', 'string', 'Password of the same user')
+params(login, { key: 'email', type: 'string', required: true, desc: 'Email of a valid user account' })
+params(login, { key: 'password', type: 'string', required: true, desc: 'Password of the same user' })
 export default async function login (req: Request, res: Response) {
   const safeBody: Auth$LoginParams = sanetizeBody(login, req.body)
   const user = await User.q.findByEmail(safeBody.email)

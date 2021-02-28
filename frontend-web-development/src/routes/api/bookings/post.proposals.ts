@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import AvailabilitiesService from '../../../services/availabilities.service'
-import { mandatory, route, sanetizeBody } from '../../../docs/routes'
+import { params, route, sanetizeBody } from '../../../docs/routes'
 
 export interface Bookings$ProposalsParams {
   latitude: number
@@ -10,10 +10,10 @@ export interface Bookings$ProposalsParams {
 }
 
 route(computeProposals, 'POST', '/api/bookings/proposals', 'Bookings', 'Proposals', 'Computes employee availabilities in zone which matches the booking.')
-mandatory(computeProposals, 'latitude', 'number', 'Latitude of the delivery location. Filter employees in same zone (up to 50 km).')
-mandatory(computeProposals, 'longitude', 'number', 'Longitude of the delivery location. Filter employees in same zone (up to 50 km).')
-mandatory(computeProposals, 'startTime', 'number', 'Unix timestamp with milliseconds of the start date and time. See Date#getTime()')
-mandatory(computeProposals, 'durationInHours', 'number', 'How long is each delivery')
+params(computeProposals, { key: 'latitude', type: 'number', required: true, desc: 'Latitude of the delivery location. Filter employees in same zone (up to 50 km).' })
+params(computeProposals, { key: 'longitude', type: 'number', required: true, desc: 'Longitude of the delivery location. Filter employees in same zone (up to 50 km).' })
+params(computeProposals, { key: 'startTime', type: 'number', required: true, desc: 'Unix timestamp with milliseconds of the start date and time. See Date#getTime()' })
+params(computeProposals, { key: 'durationInHours', type: 'number', required: true, desc: 'How long is each delivery' })
 export default async function computeProposals (req: Request, res: Response) {
   const safeBody: Bookings$ProposalsParams = sanetizeBody(computeProposals, req.body)
 
