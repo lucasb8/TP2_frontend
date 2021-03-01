@@ -2,8 +2,11 @@ FROM node:12-alpine
 
 WORKDIR /app
 
-RUN apk add mariadb-client git dos2unix
+RUN apk add mariadb-client git dos2unix curl
 RUN npm install -g typescript
+
+RUN curl -s https://raw.githubusercontent.com/eficode/wait-for/v1.1.0/wait-for -o /bin/wait-for
+RUN chmod +x /bin/wait-for
 
 ADD . /app
 RUN rm -rf node_modules build coverage .nyc_output
