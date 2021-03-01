@@ -28,8 +28,7 @@ export class Availability {
 }
 
 export default class AvailabilitiesService {
-  static async findEmployeeAvailabilitiesBetween (minDurationInHours: number, start: number, end: number) {
-    const employees = await User.q.whereEmployee.toArray()
+  static async findEmployeeAvailabilitiesBetween (employees: User[], minDurationInHours: number, start: number, end: number) {
     const proposals: { employee: User, availability: Availability }[] = []
 
     for (const employee of employees) {

@@ -3,28 +3,28 @@ import { IGetAll } from 'node-asuran-db/lib/model'
 import User from './user'
 
 export default class Commit {
-  static async getAll ({ where }: IGetAll = {}) {
+  static async getAll ({ where, conn }: IGetAll & { conn?: any } = {}) {
     if (typeof where === 'undefined') where = { sql: '', bindings: [] }
     const sql = 'SELECT * FROM `Commit`' + (where.sql.length ? ' WHERE ' + where.sql : '') + ' ORDER BY `Commit`.`id` ASC'
-    const [rows] = await MySQLStore.connection.query(sql, where.bindings) as any[][]
+    const [rows] = await (conn || MySQLStore.connection).query(sql, where.bindings) as any[][]
     return rows.map(_ => new Commit(_.id, _.author, _.message, _.openedAt, _.closedAt))
   }
 
-  static async upsertCommit (user: User) {
+  static async upsertCommit (user: User, conn = MySQLStore.connection) {
     const where = { where: { sql: 'author = ? AND closedAt IS NULL', bindings: [user?.email || 'internal'] } }
     const existing = (await this.getAll(where))[0]
     if (existing) return existing
 
-    await this.create({ author: user?.email || 'internal', message: null })
+    await this.create({ author: user?.email || 'internal', message: null }, conn)
     return (await this.getAll(where))[0]
   }
 
-  static async create (body: { author: string, message: string }) {
-    await MySQLStore.connection.query('INSERT INTO Commit (author, message) VALUES (?, ?)', [ body.author, body.message ])
+  static async create (body: { author: string, message: string }, conn = MySQLStore.connection) {
+    await conn.query('INSERT INTO Commit (author, message) VALUES (?, ?)', [ body.author, body.message ])
   }
 
-  static async close (id: number, message: string) {
-    await MySQLStore.connection.query('UPDATE Commit SET message = ?, closedAt = NOW() WHERE id = ?', [message, id])
+  static async close (id: number, message: string, conn = MySQLStore.connection) {
+    await conn.query('UPDATE Commit SET message = ?, closedAt = NOW() WHERE id = ?', [message, id])
   }
 
   static toSqlTables () {

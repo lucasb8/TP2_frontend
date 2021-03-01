@@ -74,5 +74,5 @@ async function overrideResponseJsonSerializer (req: express.Request, res: expres
 
 async function logFailedRequest (err: any, req: express.Request, res: express.Response, next: express.NextFunction) {
   if (err instanceof PrintableError) res.status(400).json({ messages: err.messages })
-  else next(err)
+  else { console.log(err); next(err) }
 }

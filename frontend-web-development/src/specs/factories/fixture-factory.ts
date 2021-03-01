@@ -6,8 +6,8 @@ export type FactoryInterface<T> = { [Property in keyof BodyCreate<T>]: void | Bo
 export default class FixtureFactory<T, TActiveRelation> {
   constructor (protected model: any) {}
 
-  // tslint:disable-next-line: no-empty
   async beforeInit (defaults: BodyPartial<T>) {}
+  async afterCreate (bodyCreate: BodyCreate<T>, id: number) {}
 
   async create (defaults: BodyPartial<T> = {} as any) {
     const bodyCreate = {} as any
@@ -22,6 +22,7 @@ export default class FixtureFactory<T, TActiveRelation> {
 
     const commit = await Commit.upsertCommit(null)
     const [id] = await this.model.create([bodyCreate], commit.id, { getId: true })
+    await this.afterCreate(bodyCreate, id)
     return id as number
   }
 

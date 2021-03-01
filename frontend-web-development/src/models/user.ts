@@ -12,7 +12,7 @@ export default class User extends newModel<User>({ className: 'User', connection
   role: 'customer' | 'employee' | 'operator'
 
   static get policy (): UserPolicy { return new (require(`./policies/${__filename.split('/').pop().replace('.js', '')}.policy`).default)(this) }
-  static get q (): UserRelation { return new (require(`./relations/${__filename.split('/').pop().replace('.js', '')}.relation`).default)(this) }
+  static get q (): UserRelation<User> { return new (require(`./relations/${__filename.split('/').pop().replace('.js', '')}.relation`).default)(this) }
 
   async onSaveFailedUniqEmail (action: 'create' | 'update', err: any) {
     if (err.message && /Duplicate entry.*email/.test(err.message)) throw new PrintableError(['This email address is already used.']);

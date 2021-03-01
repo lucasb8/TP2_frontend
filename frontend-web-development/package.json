@@ -39,6 +39,6 @@
     "lodash.get": "^4.4.2",
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
-    "node-asuran-db": "github:TruffeCendree/node-asuran-db#0.0.4"
+    "node-asuran-db": "github:TruffeCendree/node-asuran-db#0.0.5"
   }
 }

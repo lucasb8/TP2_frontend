@@ -5,6 +5,7 @@ import { getApiUsersMe } from './api/users/get.me.spec'
 import { getApiUsersIndex } from './api/users/get.index.spec'
 import { postApiUsersRegister } from './api/users/post.register.spec'
 import { postApiBookingsProposals } from './api/bookings/post.proposals.spec'
+import { postApiBookingsCoverage } from './api/bookings/post.coverage.spec'
 
 describe('APIs', () => {
   beforeEach(() => MySQLStore.reset())
@@ -16,4 +17,5 @@ describe('APIs', () => {
   getApiUsersIndex()
   postApiUsersRegister()
   postApiBookingsProposals()
+  postApiBookingsCoverage()
 })
