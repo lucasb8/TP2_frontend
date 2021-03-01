@@ -29,12 +29,13 @@ export function postApiBookingsProposals () {
         .send(body)
       
       expect(res).to.have.property('status', 200)
-      expect(res.body).to.be.a('array')
-      expect(res.body[0]).to.have.property('employee')
-      expect(res.body[0].employee.id).to.eq(insideZoneEmployeeId)
-      expect(res.body[0]).to.have.property('availability')
-      expect(res.body[0].availability.length).to.eq(1)
-      expect(res.body[0].availability[0].start).to.eq(startTime.getTime())
+      expect(res.body).to.be.a('object')
+      expect(res.body).to.have.property('proposals')
+      expect(res.body.proposals[0]).to.have.property('employee')
+      expect(res.body.proposals[0].employee.id).to.eq(insideZoneEmployeeId)
+      expect(res.body.proposals[0]).to.have.property('availability')
+      expect(res.body.proposals[0].availability.length).to.eq(1)
+      expect(res.body.proposals[0].availability[0].start).to.eq(startTime.getTime())
     })
 
     it('computes proposals with employee available after startTime (employee unavailable at exact startTime)', async () => {
@@ -52,11 +53,12 @@ export function postApiBookingsProposals () {
         .send(body)
       
       expect(res).to.have.property('status', 200)
-      expect(res.body).to.be.a('array')
-      expect(res.body[0]).to.have.property('employee')
-      expect(res.body[0]).to.have.property('availability')
-      expect(res.body[0].availability.length).to.eq(1)
-      expect(res.body[0].availability[0].start).to.eq(delivery.end)
+      expect(res.body).to.be.a('object')
+      expect(res.body).to.have.property('proposals')
+      expect(res.body.proposals[0]).to.have.property('employee')
+      expect(res.body.proposals[0]).to.have.property('availability')
+      expect(res.body.proposals[0].availability.length).to.eq(1)
+      expect(res.body.proposals[0].availability[0].start).to.eq(delivery.end)
     })
   })
 }

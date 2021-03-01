@@ -28,8 +28,8 @@ export class Availability {
 }
 
 export default class AvailabilitiesService {
-  static async findEmployeeAvailabilitiesBetween (employees: User[], minDurationInHours: number, start: number, end: number) {
-    const proposals: { employee: User, availability: Availability }[] = []
+  static async findEmployeeAvailabilitiesBetween<U extends User> (employees: U[], minDurationInHours: number, start: number, end: number) {
+    const proposals: { employee: U, availability: Availability }[] = []
 
     for (const employee of employees) {
       const availability = new Availability(minDurationInHours * 3600 * 1000, [{ start, end }])
