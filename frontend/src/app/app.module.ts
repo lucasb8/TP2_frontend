@@ -6,11 +6,17 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NavigationComponent } from './navigation/navigation.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
    declarations: [
       AppComponent,
-      NavigationComponent
+      NavigationComponent,
+      HomeComponent,
+      LoginComponent,
+      ProfileComponent
    ],
    imports: [
       BrowserModule,
