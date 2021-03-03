@@ -4,17 +4,21 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,
+      NavigationComponent
    ],
    imports: [
       BrowserModule,
       BrowserAnimationsModule,
       MatToolbarModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      AppRoutingModule
    ],
    providers: [],
    bootstrap: [AppComponent]
