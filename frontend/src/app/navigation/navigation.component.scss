@@ -1,11 +1,9 @@
-.filler {
-    flex: 1 1 auto;
- }
+.toolbar-spacer {
+   flex: 1 1 auto;
+}
 
- .gap {
-    margin-right: 10px;
- }
-
- a {
-    padding: 5px;
- }
+mat-toolbar a {
+   margin: 0 0.5em;
+   color: white !important;
+   text-decoration: none;
+}

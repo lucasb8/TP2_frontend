@@ -9,6 +9,10 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { MatCardModule} from '@angular/material/card'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
    declarations: [
@@ -24,7 +28,11 @@ import { ProfileComponent } from './profile/profile.component';
       MatToolbarModule,
       FormsModule,
       ReactiveFormsModule,
-      AppRoutingModule
+      AppRoutingModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      MatCardModule
    ],
    providers: [],
    bootstrap: [AppComponent]

@@ -1,11 +1,12 @@
 <form #form="ngForm">
-    <label>
-      Email: <input type="text" name="email" [(ngModel)]="email" required>
-    </label>
-  
-    <label>
-      Password: <input type="password" name="password" [(ngModel)]="password" required>
-    </label>
-  
-    <button (click)="submit()" [disabled]="form.invalid">Submit</button>
-  </form>
+    <mat-card>
+        <mat-form-field>
+          <input mat-input type="text" name="email" placeholder="Email" [(ngModel)]="email" matInput required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input mat-input type="password" name="password" placeholder="Password" [(ngModel)]="password" matInput required>
+        </mat-form-field>
+        <button mat-raised-button color="warm" (click)="submit()" [disabled]="form.invalid">Submit</button>
+    </mat-card>
+</form>
