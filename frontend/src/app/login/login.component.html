@@ -7,6 +7,9 @@
         <mat-form-field>
             <input mat-input type="password" name="password" placeholder="Password" [(ngModel)]="password" matInput required>
         </mat-form-field>
+
+        <mat-card class="error-box" *ngIf="errors.length">{{ errors.join(' ') }}</mat-card>
+
         <button mat-raised-button color="warm" (click)="submit()" [disabled]="form.invalid">Submit</button>
     </mat-card>
 </form>
